@@ -13,36 +13,35 @@
 
 const placesList = document.querySelector('.places__list');
 
-const addCard = (imgValue, textValue, buttonRemove) => {
+const addCard = (card) => {
     const cardTemplate = document.querySelector('#card-template').content;
-
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
 
-    cardElement.querySelector('.card__image').src = imgValue;
-    cardElement.querySelector('.card__title').textContent = textValue;
+    cardElement.querySelector('.card__image').src = card.link;
+    cardElement.querySelector('.card__title').textContent = card.name;
 
-    cardElement.querySelector('.card__like-button').addEventListener('click', () => {
-       /* buttonRemove() */
-        cardElement.closest('.card').remove()
-        console.log('1')
-    }); 
+    addRemoveEventListener(cardElement); 
 
     placesList.append(cardElement);
 }
 
-/* const removeCard = (card) => {
+const removeCard = (card) => {
     card.closest('.card').remove();
-    console.log('remove')
-} */
+}
 
-initialCards.forEach((name, link) => {
-    addCard(link, name)
-})
+const addRemoveEventListener = (cardElement) => {
+    cardElement.querySelector('.card__delete-button').addEventListener('click', () => {
+        removeCard(cardElement) 
+    }); 
+}
 
+const initialize = () => {
+    initialCards.forEach((card) => {
+        addCard(card);
+    })
+}
 
-
-console.log(initialCards)
-
+initialize();
 
 
 
