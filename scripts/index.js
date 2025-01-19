@@ -18,11 +18,12 @@ const addCard = (card) => {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
 
     cardElement.querySelector('.card__image').src = card.link;
+    cardElement.querySelector('.card__image').alt = card.alt;
     cardElement.querySelector('.card__title').textContent = card.name;
 
     addRemoveEventListener(cardElement); 
 
-    placesList.append(cardElement);
+    return cardElement;
 }
 
 const removeCard = (card) => {
@@ -37,7 +38,7 @@ const addRemoveEventListener = (cardElement) => {
 
 const initialize = () => {
     initialCards.forEach((card) => {
-        addCard(card);
+        placesList.append(addCard(card));
     })
 }
 
