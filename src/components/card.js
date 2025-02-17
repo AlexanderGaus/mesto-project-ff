@@ -1,24 +1,9 @@
 
-import { openPopup } from "./modal";
-
-
-const openImagePopup = (popup, card) => {
-    openPopup(popup);
-    ElImagePopup(card);
-}
-
-const ElImagePopup = (card) => {
-    document.querySelector('.popup__image').src = card.link;
-    document.querySelector('.popup__image').alt = card.alt;
-    document.querySelector('.popup__caption').textContent = card.name;
-}
-
 const like = (evt) => {
     evt.classList.toggle('card__like-button_is-active');
 }
 
 const addCard = (card, like, openImagePopup) => {
-    const popupIsImg = document.querySelector('.popup_type_image')
     const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
 
@@ -33,7 +18,7 @@ const addCard = (card, like, openImagePopup) => {
     likeCard.addEventListener('click', () => like(likeCard));
 
     image.addEventListener('click', () => {
-        openImagePopup(popupIsImg, card);
+        openImagePopup(card);
     })
 
     addRemoveEventListener(cardElement); 
@@ -52,4 +37,4 @@ const addRemoveEventListener = (cardElement) => {
     }); 
 }
 
-export {addCard, like, openImagePopup}
+export {addCard, like}
