@@ -8,7 +8,7 @@ const addCard = (card, like, openImagePopup) => {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
 
     const image = cardElement.querySelector('.card__image');
-    cardElement.querySelector('.card__image').alt = card.alt;
+    image.alt = card.alt;
     cardElement.querySelector('.card__title').textContent = card.name;
 
     image.src = card.link

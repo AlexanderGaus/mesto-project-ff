@@ -21,18 +21,18 @@ const editPopup = document.querySelector('.popup_type_edit');
 const cardPopup = document.querySelector('.popup_type_new-card');
 const imagePopup = document.querySelector('.popup_type_image');
 
+const imageLink = document.querySelector('.popup__image');
+const imageName = document.querySelector('.popup__caption');
+
 const openImagePopup = (card) => {
     elImagePopup(card);
     openPopup(imagePopup)
 }
 
 const elImagePopup = (card) => {
-    const imageLink = document.querySelector('.popup__image');
-    const imageAlt = document.querySelector('.popup__image');
-    const imageName = document.querySelector('.popup__caption');
 
     imageLink.src = card.link;
-    imageAlt.alt = card.alt;
+    imageLink.alt = card.alt;
     imageName.textContent = card.name
 }
 
@@ -43,10 +43,6 @@ const initialize = () => {
 }
 
 initialize();
-
-const closeSubmit = (popup) => {
-    popup.classList.remove('popup_is-opened');
-}
 
 
 // form 1
@@ -68,7 +64,7 @@ const openEditFormSubmit = (evt) => {
     profileTitle.textContent = name.value;
     profileDescription.textContent = description.value;
 
-    closeSubmit(editPopup);
+    closePopup(editPopup);
 
 }
 
@@ -93,7 +89,7 @@ const openimageFormSubmit = (evt) => {
     placeName.value = '';
     link.value = '';
 
-    closeSubmit(cardPopup);
+    closePopup(cardPopup);
 
 
 }
