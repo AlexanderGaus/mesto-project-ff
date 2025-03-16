@@ -19,13 +19,13 @@
   cursor: pointer;
 }
 
-.form__submit_inactive {
+.popup__button_disabled {
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, .2);
   color: rgba(0, 0, 0, .2);;
 }
 
-.form__submit_inactive:hover {
+.popup__button_disabled:hover {
   background: #fff;
   cursor: pointer;
 }

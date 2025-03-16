@@ -57,6 +57,9 @@ const removeCard = (card, cardId) => {
     .then(() => {
         card.remove()
     })
+    .catch((err) => {
+        console.error(err)
+    })
 }
 
 const addRemoveEventListener = (cardElement, cardId) => {

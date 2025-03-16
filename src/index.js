@@ -13,8 +13,8 @@ import './index.css';
 import {initialCards} from './components/cards.js'
 import { addCard, like } from './components/card.js';
 import { openPopup, closePopup } from './components/modal';
-import { enableValidation } from 'schema-utils';
-import { eenableValidation } from './components/valid';
+//import { enableValidation } from 'schema-utils';
+import { enableValidation } from './components/valid';
 import {getCards, getMyUser, addAvatar, addNewCard, miInfo} from "./components/api.js"
 
 const placesList = document.querySelector('.places__list');
@@ -44,8 +44,8 @@ Promise.all([getCards(), getMyUser()])
     
         })
     })
-    .catch(() => {
-        console.log('')
+    .catch((err) => {
+        console.log(err)
     })
 
 const imageLink = document.querySelector('.popup__image');
@@ -65,21 +65,23 @@ const elImagePopup = (card) => {
 
 // Валидация форм
 
-// enableValidation({
-//     formSelector: '.popup__form',
-//     inputSelector: '.popup__input',
-//     submitButtonSelector: '.popup__button',
-//     inactiveButtonClass: 'popup__button_disabled',
-//     inputErrorClass: 'popup__input_type_error',
-//     errorClass: 'popup__error_visible'
-//   });
+const config = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'form__input_type_error',
+    errorClass: 'popup__error_visible'
+}
+
+enableValidation(config);
 
 
-const formElement = document.querySelector('.popup__form');
-const popupInput = formElement.querySelector('.popup__input');
+//const formElement = document.querySelector('.popup__form');
+//const popupInput = formElement.querySelector('.popup__input');
 
   
-eenableValidation();
+//eenableValidation();
 
 // form avatar
 
@@ -89,6 +91,8 @@ const linkAvatar = formAvatar.elements['link-avatar'];
 
 const openAvatarFromSubmit = (evt) => {
     evt.preventDefault();
+
+    const formElement = document.querySelector('.popup__form');
 
     const submitButton = formElement.querySelector('.popup__button');
     submitButton.textContent = 'Сохранение...';
@@ -129,14 +133,16 @@ description.value = profileDescription.textContent;
 const openEditFormSubmit = (evt) => {
     evt.preventDefault();
 
+    const formElement = document.querySelector('.popup__form');
+
     const submitButton = formElement.querySelector('.popup__button');
     submitButton.textContent = 'Сохранение...';
 
     const nameV = name.value;
     const descriptionV = description.value;
 
-    profileTitle.textContent = name.value;
-    profileDescription.textContent = description.value;
+    // profileTitle.textContent = name.value;
+    // profileDescription.textContent = description.value;
 
     miInfo(nameV, descriptionV)
         .then(res => {
@@ -166,11 +172,13 @@ const placeLink = formImageAdd.elements['link'];
 const openimageFormSubmit = (evt) => {
     evt.preventDefault();
 
+    const formElement = document.querySelector('.popup__form');
+
     const submitButton = formElement.querySelector('.popup__button');
     submitButton.textContent = 'Сохранение...';
 
     const name = placeName.value;
-    const link = placeLink.value
+    const link = placeLink.value;
 
     addNewCard(name, link)
         .then((card, userId) => {
