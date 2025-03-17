@@ -14,7 +14,7 @@ import {initialCards} from './components/cards.js'
 import { addCard, like } from './components/card.js';
 import { openPopup, closePopup } from './components/modal';
 //import { enableValidation } from 'schema-utils';
-import { enableValidation } from './components/valid';
+import { enableValidation, setEventListeners } from './components/valid.js';
 import {getCards, getMyUser, addAvatar, addNewCard, miInfo} from "./components/api.js"
 
 const placesList = document.querySelector('.places__list');
@@ -34,7 +34,7 @@ Promise.all([getCards(), getMyUser()])
        cards.forEach((card) => {
         placesList.append(addCard(card, like, openImagePopup, userId));
     
-        const buttonDel = document.querySelector('.card__delete-button');
+        const buttonDel = document.querySelector('.card__delete-button'); //
     
         if (card.owner._id !== userId) {
             buttonDel.classList.add('inactive');
@@ -92,7 +92,7 @@ const linkAvatar = formAvatar.elements['link-avatar'];
 const openAvatarFromSubmit = (evt) => {
     evt.preventDefault();
 
-    const formElement = document.querySelector('.popup__form');
+    const formElement = document.querySelector('.popup__form_avatar');
 
     const submitButton = formElement.querySelector('.popup__button');
     submitButton.textContent = 'Сохранение...';
@@ -133,7 +133,7 @@ description.value = profileDescription.textContent;
 const openEditFormSubmit = (evt) => {
     evt.preventDefault();
 
-    const formElement = document.querySelector('.popup__form');
+    const formElement = document.querySelector('.popup__form_edit');
 
     const submitButton = formElement.querySelector('.popup__button');
     submitButton.textContent = 'Сохранение...';
@@ -146,6 +146,7 @@ const openEditFormSubmit = (evt) => {
 
     miInfo(nameV, descriptionV)
         .then(res => {
+
             profileTitle.textContent = res.name;
             profileDescription.textContent = res.about;
 
@@ -172,13 +173,15 @@ const placeLink = formImageAdd.elements['link'];
 const openimageFormSubmit = (evt) => {
     evt.preventDefault();
 
-    const formElement = document.querySelector('.popup__form');
+    const formElement = document.querySelector('.popup__form_new_card');
 
     const submitButton = formElement.querySelector('.popup__button');
     submitButton.textContent = 'Сохранение...';
 
     const name = placeName.value;
     const link = placeLink.value;
+
+
 
     addNewCard(name, link)
         .then((card, userId) => {
@@ -194,24 +197,31 @@ const openimageFormSubmit = (evt) => {
             console.error(err)
         })
         .finally(() => {
-            submitButton.textContent = 'Сохранить'
+            submitButton.textContent = 'Сохранить';
         })
 }
 
 formImageAdd.addEventListener('submit', openimageFormSubmit);
 
-profileAvatarButton.addEventListener('click', () => openPopup(avatarPopup))
-profileEditButton.addEventListener('click', () => openPopup(editPopup))
-profileAddButton.addEventListener('click', () => openPopup(cardPopup))
+profileAvatarButton.addEventListener('click', () => {
+    openPopup(avatarPopup);
+    setEventListeners(formAvatar, config)
+})
+profileEditButton.addEventListener('click', () => {
+    openPopup(editPopup)
+    profileTitle.textContent = name.value;
+    profileDescription.textContent = description.value;
+})
+profileAddButton.addEventListener('click', () => {
+    openPopup(cardPopup);
+    setEventListeners(formImageAdd, config)
+})
 
 const addListener = (popup) => {
 
-    const popupClose = document.querySelectorAll('.popup__close');
-    popupClose.forEach(evt => {
-        evt.addEventListener('click', () => {
-            closePopup(popup);
-        });
-    })
+    const popupClose = popup.querySelector('.popup__close');
+
+    popupClose.addEventListener('click', () => closePopup(popup))
     
     popup.addEventListener('mousedown', (evt) => {
         if(evt.target.classList.contains('popup')) {
