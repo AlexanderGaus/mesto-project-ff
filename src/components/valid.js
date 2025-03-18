@@ -81,7 +81,7 @@ export const clearValidation = (formElement, config) => {
 
     inputList.forEach((inputElement) => {
         hideInputError(formElement, inputElement, config);
-        toggleButtonState(inputList, buttonElement, config);
+        //toggleButtonState(inputList, buttonElement, config);
     })
 
     toggleButtonState(inputList, buttonElement, config);
