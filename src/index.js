@@ -14,7 +14,7 @@ import {initialCards} from './components/cards.js'
 import { addCard, like } from './components/card.js';
 import { openPopup, closePopup } from './components/modal';
 //import { enableValidation } from 'schema-utils';
-import { enableValidation, setEventListeners } from './components/valid.js';
+import { enableValidation, clearValidation, setEventListeners } from './components/valid.js';
 import {getCards, getMyUser, addAvatar, addNewCard, miInfo} from "./components/api.js"
 
 const placesList = document.querySelector('.places__list');
@@ -204,8 +204,8 @@ const openimageFormSubmit = (evt) => {
 formImageAdd.addEventListener('submit', openimageFormSubmit);
 
 profileAvatarButton.addEventListener('click', () => {
+    clearValidation(formAvatar, config)
     openPopup(avatarPopup);
-    setEventListeners(formAvatar, config)
 })
 profileEditButton.addEventListener('click', () => {
     openPopup(editPopup)
@@ -213,8 +213,9 @@ profileEditButton.addEventListener('click', () => {
     profileDescription.textContent = description.value;
 })
 profileAddButton.addEventListener('click', () => {
+    //setEventListeners(formImageAdd, config)
+    clearValidation(formImageAdd, config)
     openPopup(cardPopup);
-    setEventListeners(formImageAdd, config)
 })
 
 const addListener = (popup) => {
